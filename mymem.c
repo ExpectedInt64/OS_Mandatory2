@@ -62,11 +62,12 @@ void initmem(strategies strategy, size_t sz)
 
 	/* TODO: release any other memory you were using for bookkeeping when doing a re-initialization! */
 	if(head != NULL) {
-		MemoryList *temp = NULL;
-		while(head != NULL){
-			temp = head->next;
-			free(head);
-			head = temp;
+		MemoryList *temp;
+		MemoryList *cPtr = head;
+		while(cPtr != NULL){
+			temp = cPtr->next;
+			free(cPtr);
+			cPtr = temp;
 		}
 	}
 
@@ -169,12 +170,13 @@ void myfree(void* block)
 	MemoryList *cPtr = NULL;
 	//We take inspiration from the previous func (Best-fit)
 	cPtr = head;
-	MemoryList *bPtr = NULL;
+	/*MemoryList *bPtr = NULL;
 	while(cPtr != NULL){
 		if(cPtr->ptr == block && cPtr->alloc == 1) 	bPtr = cPtr;	
 	cPtr=cPtr->next;
 	}
-	bPtr->alloc=0;
+	bPtr->alloc=0;*/
+	cPtr->alloc=0;
 	return;
 }
 
